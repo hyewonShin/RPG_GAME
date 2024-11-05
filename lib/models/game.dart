@@ -93,6 +93,7 @@ class Game {
     print(
         '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}');
 
+    print('-----------------------------------------------');
     print('${character!.heroName} 의 턴');
     stdout.write("행동을 선택하세요(1: 공격, 2: 방어): ");
     String? action = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
@@ -100,18 +101,21 @@ class Game {
     bool whileloop = true;
     // while (whileloop) {
     if (action == "1") {
-      character!.attackMonster(randomMonster);
-      randomMonster.attackCharacter(character!);
+      bool win = character!.attackMonster(randomMonster);
+      if (win) {
+        // 몬스터를 물리침
+        monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
+        print(monsters);
+        print('다음 몬스터와 싸우시겠습니까?');
+      } else {
+        randomMonster.attackCharacter(character!);
+      }
     } else if (action == "2") {
       character!.defend(randomMonster);
       randomMonster.attackCharacter(character!);
     } else {
       print('1,2 중 하나를 입력해주세요 !');
     }
-
-    // print('👏🏻 ${randomMonster.monsterName}을(를) 물리쳤습니다 !');
-    // stdout.write("다음 몬스터와 대결하시겠습니까? (y/n)");
-
     // }
   }
 
