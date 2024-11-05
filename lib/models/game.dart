@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:rpg_game/models/character.dart';
 import 'package:rpg_game/models/monster.dart';
 import 'package:dartenv/dartenv.dart';
@@ -54,6 +55,7 @@ class Game {
 
         monsters.add(Monster(monsterName, monsterHp, monsterAttack));
       }
+
       // print('⭐monsters > $monsters');
     } catch (e) {
       print('몬스터 데이터를 불러오는 데 실패했습니다: $e');
@@ -70,17 +72,32 @@ class Game {
         stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
     RegExp regex = RegExp(r'^[a-zA-Z가-힣]+$');
-    if (regex.hasMatch(heroName ?? "")) {
-      Character? heroData = await game.loadCharacterStats(heroName!);
-      // print('heroData > $heroData');
-      print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
-      print(
-          '$heroName - 체력:${heroData?.heroHp} 공격력:${heroData?.heroAttack} 방어력:${heroData?.heroDefense}');
-    } else {
+    if (!regex.hasMatch(heroName ?? "")) {
       print('캐릭터의 이름은 한글,영문 대소문자만 가능합니다 !');
+      return;
     }
+    Character? heroData = await game.loadCharacterStats(heroName!);
+    await loadMonsterStats();
+    // print('heroData > $heroData');
+
+    print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
+    print(
+        '$heroName - 체력:${heroData?.heroHp} 공격력:${heroData?.heroAttack} 방어력:${heroData?.heroDefense}');
+    Monster randomMonster = getRandomMonster();
+    print('두둥-! 새로운 몬스터가 나타났습니다 !');
+    print(
+        '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}');
   }
 
   //전투를 진행하는 메서드
   void battle() {}
+
+//랜덤으로 몬스터를 불러오는 메서드
+  Monster getRandomMonster() {
+    if (monsters.isEmpty) {
+      print('몬스터 리스트가 비어있습니다 !');
+    }
+    int randomIndex = Random().nextInt(monsters.length);
+    return monsters[randomIndex];
+  }
 }
