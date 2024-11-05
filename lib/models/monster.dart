@@ -18,7 +18,7 @@ class Monster {
 
   @override
   String toString() =>
-      'monsterName > $monsterName / monsterHp > $monsterHp / monsterAttack > $monsterAttack';
+      'monsterName : $monsterName / monsterHp : $monsterHp / monsterAttack : $monsterAttack';
 
   // 공격 메서드
   //캐릭터에게 공격을 가하여 피해를 입힙니다.
