@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:rpg_game/models/monster.dart';
+import 'package:dartenv/dartenv.dart';
 
 class Character {
   // 캐릭터 이름
@@ -30,5 +32,8 @@ class Character {
 
   // 상태를 출력하는 메서드
   //캐릭터의 현재 체력, 공격력, 방어력을 매 턴마다 출력합니다.
-  void showStatus() {}
+  void showStatus() {
+    print('$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense');
+    // return '$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense';
+  }
 }
