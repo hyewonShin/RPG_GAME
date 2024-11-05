@@ -14,7 +14,7 @@ class Game {
   List<Monster> monsters = [];
 
   //물리친 몬스터 개수(몬스터 리스트의 개수보다 클 수 없습니다.)
-  int killedMonterCount = 0;
+  int killedMonterCount = 5;
 
   //캐릭터 정보를 불러오는 메서드
   Future<Character?> loadCharacterStats(String heroName) async {
