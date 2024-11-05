@@ -33,8 +33,7 @@ class Monster {
 
     if (demage > 0) {
       character.heroHp -= demage;
-      print(
-          '$monsterName이(가) ${character.heroName}에게 $monsterAttack의 데미지를 입혔습니다.');
+      print('$monsterName이(가) ${character.heroName}에게 $demage의 데미지를 입혔습니다.');
       showStatus();
     }
   }
