@@ -2,7 +2,7 @@ import 'package:rpg_game/models/character.dart';
 
 class Monster {
   // 몬스터 이름
-  String monster = "";
+  String monsterName = "";
 
   // 몬스터의 체력
   int monsterHp = 0;
@@ -13,6 +13,12 @@ class Monster {
 
   // 방어력(몬스터의 방어력은 0이라고 가정합니다.)
   int monsterDefense = 0;
+
+  Monster(this.monsterName, this.monsterHp, this.monsterAttack);
+
+  @override
+  String toString() =>
+      'monsterName > $monsterName / monsterHp > $monsterHp / monsterAttack > $monsterAttack';
 
   // 공격 메서드
   //캐릭터에게 공격을 가하여 피해를 입힙니다.

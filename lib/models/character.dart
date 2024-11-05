@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:rpg_game/models/monster.dart';
 
 class Character {
@@ -13,6 +12,12 @@ class Character {
 
   // 캐릭터의 방어력
   int heroDefense = 0;
+
+  Character(this.heroHp, this.heroAttack, this.heroDefense);
+
+  @override
+  String toString() =>
+      'heroHp > $heroHp / heroHp > $heroHp / heroAttack > $heroAttack';
 
   // 공격 메서드
   //몬스터에게 공격을 가하여 피해를 입힙니다.
