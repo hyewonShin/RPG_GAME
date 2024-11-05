@@ -76,20 +76,10 @@ class Game {
     await loadCharacterStats(heroName!);
     await loadMonsterStats();
 
-    Monster? randomMonster = await getRandomMonster();
-    // print('heroData > $heroData');
-
     print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
     character!.showStatus();
     print('-----------------------------------------------');
-
-    print('👀 두둥-! 새로운 몬스터가 나타났습니다 !');
-    print(
-        '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}');
-
     battle();
-    stdout.write("다음 몬스터와 대결하시겠습니까? (y/n)");
-
     if (character!.heroHp < 0) {
       print('게임 종료!');
       return;
@@ -98,26 +88,29 @@ class Game {
 
   //전투를 진행하는 메서드
   Future battle() async {
+    Monster randomMonster = await getRandomMonster();
+    print('👀 두둥-! 새로운 몬스터가 나타났습니다 !');
+    print(
+        '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}');
+
     print('${character!.heroName} 의 턴');
     stdout.write("행동을 선택하세요(1: 공격, 2: 방어): ");
     String? action = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
-
-    Monster randomMonster;
-    randomMonster = await getRandomMonster();
 
     bool whileloop = true;
     // while (whileloop) {
     if (action == "1") {
       character!.attackMonster(randomMonster);
-      print(
-          '${character!.heroName}이(가) ${randomMonster.monsterName}에게 10의 데미지를 입혔습니다.');
+      randomMonster.attackCharacter(character!);
     } else if (action == "2") {
-      print('${character!.heroName}이(가) 방어 태세를 취하여 0 만큼 체력을 얻었습니다');
+      character!.defend(randomMonster);
+      randomMonster.attackCharacter(character!);
     } else {
       print('1,2 중 하나를 입력해주세요 !');
     }
 
-    print('👏🏻 ${randomMonster.monsterName}을(를) 물리쳤습니다 !');
+    // print('👏🏻 ${randomMonster.monsterName}을(를) 물리쳤습니다 !');
+    // stdout.write("다음 몬스터와 대결하시겠습니까? (y/n)");
 
     // }
   }
