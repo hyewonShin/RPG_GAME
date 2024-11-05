@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:rpg_game/models/character.dart';
 import 'package:rpg_game/models/monster.dart';
@@ -14,7 +15,7 @@ class Game {
   int killedMonterCount = 0;
 
   //캐릭터 정보를 불러오는 메서드
-  Future<void> loadCharacterStats() async {
+  Future<Character?> loadCharacterStats(String heroName) async {
     try {
       final filePath = env('CHARACTERS_PATH');
       final file = File(filePath);
@@ -27,16 +28,17 @@ class Game {
       int heroAttack = int.parse(stats[1]);
       int heroDefense = int.parse(stats[2]);
 
-      character = Character(heroHp, heroAttack, heroDefense);
+      character = Character(heroName, heroHp, heroAttack, heroDefense);
 
-      print('🐱character > $character');
+      // print('🐱character > $character');
+      return character;
     } catch (e) {
       print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');
     }
   }
 
   //몬스터 정보를 불러오는 메서드
-  Future<void> loadMonsterStats() async {
+  Future<Character?> loadMonsterStats() async {
     try {
       final file = File(env('MONSTERS_PATH'));
       final contents = await file.readAsString();
@@ -51,14 +53,28 @@ class Game {
 
         monsters.add(Monster(monsterName, monsterHp, monsterAttack));
       }
-      print('⭐monsters > $monsters');
+      // print('⭐monsters > $monsters');
     } catch (e) {
       print('몬스터 데이터를 불러오는 데 실패했습니다: $e');
     }
   }
 
   //게임을 시작하는 메서드
-  void startGame() async {}
+  void startGame() async {
+    Game game = Game();
+
+    stdout.write("👉🏻 캐릭터의 이름을 입력하세요: ");
+
+    String? heroName =
+        stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+    print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
+
+    Character? heroData = await game.loadCharacterStats(heroName!);
+    // print('heroData > $heroData');
+
+    print(
+        '$heroName - 체력:${heroData?.heroHp} 공격력:${heroData?.heroAttack} 방어력:${heroData?.heroDefense}');
+  }
 
   //전투를 진행하는 메서드
   void battle() {}
