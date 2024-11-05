@@ -11,7 +11,7 @@ class Game {
   List<Monster> monsters = [];
 
   //물리친 몬스터 개수(몬스터 리스트의 개수보다 클 수 없습니다.)
-  int killMonterCount = 0;
+  int killedMonterCount = 0;
 
   //캐릭터 정보를 불러오는 메서드
   Future<void> loadCharacterStats() async {
@@ -29,7 +29,7 @@ class Game {
 
       character = Character(heroHp, heroAttack, heroDefense);
 
-      print('character > $character');
+      print('🐱character > $character');
     } catch (e) {
       print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');
     }
@@ -51,7 +51,7 @@ class Game {
 
         monsters.add(Monster(monsterName, monsterHp, monsterAttack));
       }
-      print('monsters > $monsters');
+      print('⭐monsters > $monsters');
     } catch (e) {
       print('몬스터 데이터를 불러오는 데 실패했습니다: $e');
     }
