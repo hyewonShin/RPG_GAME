@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:rpg_game/models/character.dart';
 import 'package:rpg_game/models/monster.dart';
 import 'package:dartenv/dartenv.dart';
+import 'dart:core';
 
 class Game {
   //캐릭터
@@ -67,13 +68,17 @@ class Game {
 
     String? heroName =
         stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
-    print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
 
-    Character? heroData = await game.loadCharacterStats(heroName!);
-    // print('heroData > $heroData');
-
-    print(
-        '$heroName - 체력:${heroData?.heroHp} 공격력:${heroData?.heroAttack} 방어력:${heroData?.heroDefense}');
+    RegExp regex = RegExp(r'^[a-zA-Z가-힣]+$');
+    if (regex.hasMatch(heroName ?? "")) {
+      Character? heroData = await game.loadCharacterStats(heroName!);
+      // print('heroData > $heroData');
+      print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
+      print(
+          '$heroName - 체력:${heroData?.heroHp} 공격력:${heroData?.heroAttack} 방어력:${heroData?.heroDefense}');
+    } else {
+      print('캐릭터의 이름은 한글,영문 대소문자만 가능합니다 !');
+    }
   }
 
   //전투를 진행하는 메서드
