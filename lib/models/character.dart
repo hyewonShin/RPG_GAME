@@ -45,6 +45,5 @@ class Character {
   //캐릭터의 현재 체력, 공격력, 방어력을 매 턴마다 출력합니다.
   void showStatus() {
     print('$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense');
-    // return '$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense';
   }
 }

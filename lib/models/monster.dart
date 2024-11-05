@@ -35,6 +35,7 @@ class Monster {
       character.heroHp -= demage;
       print(
           '$monsterName이(가) ${character.heroName}에게 $monsterAttack의 데미지를 입혔습니다.');
+      showStatus();
     }
   }
 
@@ -42,6 +43,5 @@ class Monster {
   //몬스터의 현재 체력과 공격력을 매 턴마다 출력합니다.
   void showStatus() {
     print('$monsterName - 체력:$monsterHp 공격력:$monsterAttack');
-    // return '$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense';
   }
 }
