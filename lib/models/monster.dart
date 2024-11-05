@@ -17,7 +17,8 @@ class Monster {
   // 방어력(몬스터의 방어력은 0이라고 가정합니다.)
   int monsterDefense = 0;
 
-  Monster(this.monsterName, this.monsterHp, this.monsterAttack);
+  Monster(this.monsterName, this.monsterHp, this.monsterAttack)
+      : monsterDefense = 0;
 
   @override
   String toString() =>
