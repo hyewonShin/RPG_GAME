@@ -5,9 +5,9 @@ import 'package:dartenv/dartenv.dart';
 
 class Game {
   //캐릭터
-  String character = '';
+  Character? character;
 
-  //몬스터 리스트
+  // 몬스터 리스트
   List<Monster> monsters = [];
 
   //물리친 몬스터 개수(몬스터 리스트의 개수보다 클 수 없습니다.)
@@ -27,9 +27,9 @@ class Game {
       int heroAttack = int.parse(stats[1]);
       int heroDefense = int.parse(stats[2]);
 
-      print(heroHp);
-      print(heroAttack);
-      print(heroDefense);
+      character = Character(heroHp, heroAttack, heroDefense);
+
+      print('character > $character');
     } catch (e) {
       print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');
     }
@@ -40,17 +40,18 @@ class Game {
     try {
       final file = File(env('MONSTERS_PATH'));
       final contents = await file.readAsString();
-      final stats = contents.split(',');
+      final stats = contents.split('\n');
 
-      if (stats.length != 3) throw FormatException('Invalid monster data');
+      for (var item in stats) {
+        final monster = item.split(',');
 
-      int monsterHp = int.parse(stats[0]);
-      int monsterAttack = int.parse(stats[1]);
-      int monsterDefense = int.parse(stats[2]);
+        String monsterName = monster[0];
+        int monsterHp = int.parse(monster[1]);
+        int monsterAttack = int.parse(monster[2]);
 
-      print(monsterHp);
-      print(monsterAttack);
-      print(monsterDefense);
+        monsters.add(Monster(monsterName, monsterHp, monsterAttack));
+      }
+      print('monsters > $monsters');
     } catch (e) {
       print('몬스터 데이터를 불러오는 데 실패했습니다: $e');
     }
