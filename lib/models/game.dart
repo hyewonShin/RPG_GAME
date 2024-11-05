@@ -39,7 +39,7 @@ class Game {
   }
 
   //몬스터 정보를 불러오는 메서드
-  Future<Character?> loadMonsterStats() async {
+  Future<void> loadMonsterStats() async {
     try {
       final file = File(env('MONSTERS_PATH'));
       final contents = await file.readAsString();
