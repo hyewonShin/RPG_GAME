@@ -8,7 +8,7 @@ class Character {
   int heroHp = 0;
 
   // 캐릭터의 공격력
-  int heroAttackPower = 0;
+  int heroAttack = 0;
 
   // 캐릭터의 방어력
   int heroDefense = 0;

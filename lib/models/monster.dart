@@ -9,7 +9,7 @@ class Monster {
 
   // 랜덤으로 지정할 공격력 범위 최댓값
   //몬스터의 공격력은 캐릭터의 방어력보다 작을 수 없습니다. 랜덤으로 지정하여 캐릭터의 방어력과 랜덤 값 중 최대값으로 설정해주세요.
-  int monsterAttackPower = 0;
+  int monsterAttack = 0;
 
   // 방어력(몬스터의 방어력은 0이라고 가정합니다.)
   int monsterDefense = 0;
