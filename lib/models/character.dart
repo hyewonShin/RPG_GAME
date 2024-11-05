@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:rpg_game/models/monster.dart';
 import 'package:dartenv/dartenv.dart';
@@ -23,13 +24,16 @@ class Character {
 
   // 공격 메서드
   //몬스터에게 공격을 가하여 피해를 입힙니다.
-  void attackMonster(Monster monster) {
+  bool attackMonster(Monster monster) {
     monster.monsterHp -= heroAttack;
     print('$heroName이(가) ${monster.monsterName}에게 $heroAttack의 데미지를 입혔습니다.');
 
     if (monster.monsterHp <= 0) {
       print('🥳 ${monster.monsterName}을 물리쳤습니다 !');
+      return true;
     }
+
+    return false;
   }
 
   // 방어 메서드
