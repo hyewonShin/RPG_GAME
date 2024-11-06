@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:rpg_game/models/character.dart';
 import 'package:dartenv/dartenv.dart';
+import 'package:rpg_game/models/game.dart';
 
 class Monster {
   // 몬스터 이름
@@ -29,6 +30,8 @@ class Monster {
   void attackCharacter(Character character) {
     print('-----------------------------------------------');
     print('🔨 $monsterName의 턴');
+    int gameTurnCount = ++Game.turnCount;
+
     int demage = monsterAttack - character.heroDefense;
 
     if (demage > 0) {
@@ -37,11 +40,23 @@ class Monster {
       character.showStatus();
       showStatus();
     }
+
+    //몬스터의 방어력 증가 기능 추가
+    if (gameTurnCount % 3 == 0) {
+      //3턴마다 방어력이 2씩 증가
+      monsterDefense += 2;
+
+      // 3턴마다 몬스터의 방어력이 2가 증가하면 카운터 변수를 0으로 초기화
+      gameTurnCount == 0;
+
+      print('$monsterName의 방어력이 증가했습니다! 현재 방어력: $monsterDefense');
+    }
   }
 
   // 상태를 출력하는 메서드
   //몬스터의 현재 체력과 공격력을 매 턴마다 출력합니다.
   void showStatus() {
-    print('$monsterName - 체력:$monsterHp 공격력:$monsterAttack');
+    print(
+        '$monsterName - 체력:$monsterHp 공격력:$monsterAttack 방어력: $monsterDefense');
   }
 }
