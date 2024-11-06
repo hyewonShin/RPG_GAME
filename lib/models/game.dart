@@ -19,6 +19,8 @@ class Game {
   // bonusHp() 의 결과값인 캐릭터의 체력
   int bonusHeroHp = 0;
 
+  static int turnCount = 0;
+
   Future<void> loadCharacterStats(String heroName) async {
     try {
       final filePath = env('CHARACTERS_PATH');
