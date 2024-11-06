@@ -47,7 +47,10 @@ class Game {
 
         String monsterName = monster[0];
         int monsterHp = int.parse(monster[1]);
-        int monsterAttack = int.parse(monster[2]);
+        int monsterAttackRange = int.parse(monster[2]);
+        int monsterAttack =
+            Random().nextInt(monsterAttackRange - character!.heroDefense + 1) +
+                character!.heroDefense;
 
         monsters.add(Monster(monsterName, monsterHp, monsterAttack));
       }
@@ -64,10 +67,6 @@ class Game {
 
     await battle();
   }
-
-  // 랜덤으로 지정할 공격력 범위 최대값 (int) =>  int monsterAttack;
-  // → 몬스터의 공격력은 캐릭터의 방어력보다 작을 수 없습니다.
-  //   랜덤으로 지정하여 캐릭터의 방어력과 랜덤 값 중 최대값으로 설정해주세요.
 
   //전투를 진행하는 메서드
   Future battle() async {
@@ -103,8 +102,8 @@ class Game {
                   stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
               if (nextGame == 'y' || nextGame == 'Y') {
-                stdout.write('계속해서 게임을 진행합니다.');
                 print('-----------------------------------------------');
+                print('계속해서 게임을 진행합니다.');
               } else if (nextGame == 'n' || nextGame == 'N') {
                 print('n을 입력하셨습니다. 게임을 종료합니다!');
                 return;
