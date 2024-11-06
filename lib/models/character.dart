@@ -1,7 +1,4 @@
-import 'dart:ffi';
-import 'dart:io';
 import 'package:rpg_game/models/monster.dart';
-import 'package:dartenv/dartenv.dart';
 
 class Character {
   // 캐릭터 이름

@@ -30,8 +30,6 @@ class Game {
       int heroDefense = int.parse(stats[2]);
 
       character = Character(heroName, heroHp, heroAttack, heroDefense);
-
-      // print('🐱character > $character');
     } catch (e) {
       print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');
     }
@@ -53,9 +51,6 @@ class Game {
 
         monsters.add(Monster(monsterName, monsterHp, monsterAttack));
       }
-
-      // print('⭐monsters > $monsters');
-      // return monsters;
     } catch (e) {
       print('몬스터 데이터를 불러오는 데 실패했습니다: $e');
     }
@@ -102,7 +97,6 @@ class Game {
             if (character!.heroHp <= 0) {
               print('-----------------------------------------------');
               print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
-              // fileWrite(character!.heroName);
               fileWrite(character!.heroName, character!.heroHp, false);
               return;
             }
