@@ -70,7 +70,7 @@ class Game {
       print('게임 종료!');
       return;
     } else {
-      battle();
+      await battle();
     }
   }
 
