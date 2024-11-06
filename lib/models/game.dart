@@ -94,7 +94,8 @@ class Game {
 
         if (action == "1") {
           bool win = character!.attackMonster(randomMonster);
-          specialItem(character!.heroAttack);
+          bool useItem = character!.useItemCheck();
+          if (!useItem) specialItem(character!.heroAttack);
           if (win) {
             // 몬스터를 물리침
             monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
@@ -131,7 +132,8 @@ class Game {
         } else if (action == "2") {
           character!.defend(randomMonster);
           randomMonster.attackCharacter(character!);
-          specialItem(character!.heroAttack);
+          bool useItem = character!.useItemCheck();
+          if (!useItem) specialItem(character!.heroAttack);
         } else {
           print('1,2 중 하나를 입력해주세요 !');
         }
