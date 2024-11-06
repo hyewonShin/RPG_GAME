@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:rpg_game/models/game.dart';
 
 Future<void> main() async {

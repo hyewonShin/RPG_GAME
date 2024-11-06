@@ -16,6 +16,8 @@ class Game {
   int killedMonterCount = 5;
   int killedMonter = 0;
 
+  int bonusHeroHp = 0;
+
   Future<void> loadCharacterStats(String heroName) async {
     try {
       final filePath = env('CHARACTERS_PATH');
@@ -29,7 +31,9 @@ class Game {
       int heroAttack = int.parse(stats[1]);
       int heroDefense = int.parse(stats[2]);
 
-      character = Character(heroName, heroHp, heroAttack, heroDefense);
+      bonusHeroHp = bonusHp(heroHp);
+
+      character = Character(heroName, bonusHeroHp, heroAttack, heroDefense);
     } catch (e) {
       print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');
     }
@@ -63,6 +67,7 @@ class Game {
   void startGame(heroName) async {
     print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
     character!.showStatus();
+    // bonusHp(character!.heroHp);
     print('-----------------------------------------------');
 
     await battle();
@@ -137,20 +142,37 @@ class Game {
     int randomIndex = Random().nextInt(monsters.length);
     return monsters[randomIndex];
   }
-}
 
 // 캐릭터의 이름, 남은 체력, 게임 결과(승리/패배) 저장하는 메서드
-void fileWrite(String heroName, int heroHp, bool win) {
-  final filePath = env('SAVE_PATH');
-  final file = File(filePath);
+  void fileWrite(String heroName, int heroHp, bool win) {
+    final filePath = env('SAVE_PATH');
+    final file = File(filePath);
 
-  stdout.write('결과를 저장하시겠습니까? (y/n) ');
-  String? result = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+    stdout.write('결과를 저장하시겠습니까? (y/n) ');
+    String? result = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
-  if (result == 'y' || result == 'Y') {
-    file.writeAsStringSync('heroName: $heroName / heroHp: $heroHp / win: $win');
-  } else if (result == 'n' || result == 'N') {
-    print('게임 결과를 저장하지 않고 종료합니다.');
-    return;
+    if (result == 'y' || result == 'Y') {
+      file.writeAsStringSync(
+          'heroName: $heroName / heroHp: $heroHp / win: $win');
+    } else if (result == 'n' || result == 'N') {
+      print('게임 결과를 저장하지 않고 종료합니다.');
+      return;
+    }
+  }
+
+//캐릭터의 체력 증가 기능
+//30%의 확률로 캐릭터에게 보너스 체력을 제공
+  int bonusHp(int heroHp) {
+    Random random = Random();
+    bool result = random.nextDouble() <= 0.3;
+
+    if (result) {
+      bonusHeroHp = heroHp + 10;
+      print('🚀 보너스 체력을 얻었습니다! 현재 체력: $bonusHeroHp');
+      return bonusHeroHp;
+    } else {
+      print('아쉽게도 보너스 체력을 얻지 못했습니다.');
+      return heroHp;
+    }
   }
 }
