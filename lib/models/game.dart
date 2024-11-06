@@ -69,7 +69,11 @@ class Game {
 
     RegExp regex = RegExp(r'^[a-zA-Z가-힣]+$');
     if (!regex.hasMatch(heroName ?? "")) {
-      print('캐릭터의 이름은 한글,영문 대소문자만 가능합니다 !');
+      if (heroName == "") {
+        print('캐릭터의 이름은 빈 문자열이 아니어야 합니다.');
+      } else {
+        print('캐릭터의 이름은 한글,영문 대소문자만 가능합니다 !');
+      }
       return;
     }
     await loadCharacterStats(heroName!);
