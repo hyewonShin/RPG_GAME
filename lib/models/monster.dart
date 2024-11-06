@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:rpg_game/models/character.dart';
-import 'package:dartenv/dartenv.dart';
 import 'package:rpg_game/models/game.dart';
 
 class Monster {
