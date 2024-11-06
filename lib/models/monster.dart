@@ -28,7 +28,7 @@ class Monster {
   //캐릭터에게 입히는 데미지는 몬스터의 공격력에서 캐릭터의 방어력을 뺀 값이며, 최소 데미지는 0 이상입니다.
   void attackCharacter(Character character) {
     print('-----------------------------------------------');
-    print('$monsterName의 턴');
+    print('🔨 $monsterName의 턴');
     int demage = monsterAttack - character.heroDefense;
 
     if (demage > 0) {

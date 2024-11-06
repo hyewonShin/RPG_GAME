@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:rpg_game/models/character.dart';
 import 'package:rpg_game/models/monster.dart';
 import 'package:dartenv/dartenv.dart';
-import 'dart:core';
 
 class Game {
   //캐릭터
@@ -94,7 +93,7 @@ class Game {
         '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}');
 
     print('-----------------------------------------------');
-    print('${character!.heroName} 의 턴');
+    print('🧐 ${character!.heroName} 의 턴');
     stdout.write("행동을 선택하세요(1: 공격, 2: 방어): ");
     String? action = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
