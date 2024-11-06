@@ -100,30 +100,30 @@ class Game {
             // 몬스터를 물리침
             monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
             killedMonter += 1;
-
-            if (killedMonter >= killedMonterCount) {
-              print('🏅 ${character!.heroName} 용사님 축하합니다! 모든 몬스터를 물리쳤습니다 🥳');
-              return;
-            } else {
-              print('다음 몬스터와 싸우시겠습니까? (y/n): ');
-              String? nextGame =
-                  stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
-
-              if (nextGame == 'y' || nextGame == 'Y') {
-                stdout.write('계속해서 게임을 진행합니다.');
-                print('-----------------------------------------------');
-              } else if (nextGame == 'n' || nextGame == 'N') {
-                print('n을 입력하셨습니다. 게임을 종료합니다!');
-                break;
-              }
-            }
           } else {
             randomMonster.attackCharacter(character!);
 
             if (character!.heroHp <= 0) {
               print('-----------------------------------------------');
               print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
-              break;
+              return;
+            }
+          }
+
+          if (killedMonter >= killedMonterCount) {
+            print('🏅 ${character!.heroName} 용사님 축하합니다! 모든 몬스터를 물리쳤습니다 🥳');
+            return;
+          } else {
+            stdout.write('다음 몬스터와 싸우시겠습니까? (y/n): ');
+            String? nextGame =
+                stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+
+            if (nextGame == 'y' || nextGame == 'Y') {
+              stdout.write('계속해서 게임을 진행합니다.');
+              print('-----------------------------------------------');
+            } else if (nextGame == 'n' || nextGame == 'N') {
+              print('n을 입력하셨습니다. 게임을 종료합니다!');
+              return;
             }
           }
         } else if (action == "2") {
