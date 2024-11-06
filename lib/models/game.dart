@@ -19,8 +19,6 @@ class Game {
   // bonusHp() 의 결과값인 캐릭터의 체력
   int bonusHeroHp = 0;
 
-  int useheroAttack = 0;
-
   Future<void> loadCharacterStats(String heroName) async {
     try {
       final filePath = env('CHARACTERS_PATH');
@@ -193,7 +191,7 @@ class Game {
 
     if (result == '3') {
       //한 턴 동안 공격력이 두 배로 변경
-      useheroAttack = heroAttack * 2;
+      int useheroAttack = heroAttack * 2;
       character!.heroAttack = useheroAttack;
       Character.useItem = true;
       print('특수 아이템을 사용합니다 ! 현재 공격력: $useheroAttack');
