@@ -70,13 +70,9 @@ class Game {
     await battle();
   }
 
-  // 캐릭터의 체력은 대결간에 누적
-
   // 랜덤으로 지정할 공격력 범위 최대값 (int) =>  int monsterAttack;
   // → 몬스터의 공격력은 캐릭터의 방어력보다 작을 수 없습니다.
   //   랜덤으로 지정하여 캐릭터의 방어력과 랜덤 값 중 최대값으로 설정해주세요.
-
-  // 게임 종류 후 결과를 파일에 저장
 
   //전투를 진행하는 메서드
   Future battle() async {
@@ -160,5 +156,8 @@ void fileWrite(String heroName, int heroHp, bool win) {
 
   if (result == 'y' || result == 'Y') {
     file.writeAsStringSync('heroName: $heroName / heroHp: $heroHp / win: $win');
+  } else if (result == 'n' || result == 'N') {
+    print('게임 결과를 저장하지 않고 종료합니다.');
+    return;
   }
 }
