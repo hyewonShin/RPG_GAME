@@ -106,12 +106,16 @@ class Game {
             if (character!.heroHp <= 0) {
               print('-----------------------------------------------');
               print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
+              // fileWrite(character!.heroName);
+              fileWrite(character!.heroName, character!.heroHp, false);
               return;
             }
           }
 
           if (killedMonter >= killedMonterCount) {
+            // 설정한 물리친 몬스터 개수만큼 몬스터를 물리치면 게임에서 승리
             print('🏅 ${character!.heroName} 용사님 축하합니다! 모든 몬스터를 물리쳤습니다 🥳');
+            fileWrite(character!.heroName, character!.heroHp, true);
             return;
           } else {
             stdout.write('다음 몬스터와 싸우시겠습니까? (y/n): ');
@@ -143,5 +147,18 @@ class Game {
     }
     int randomIndex = Random().nextInt(monsters.length);
     return monsters[randomIndex];
+  }
+}
+
+// 캐릭터의 이름, 남은 체력, 게임 결과(승리/패배) 저장하는 메서드
+void fileWrite(String heroName, int heroHp, bool win) {
+  final filePath = env('SAVE_PATH');
+  final file = File(filePath);
+
+  stdout.write('결과를 저장하시겠습니까? (y/n) ');
+  String? result = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+
+  if (result == 'y' || result == 'Y') {
+    file.writeAsStringSync('heroName: $heroName / heroHp: $heroHp / win: $win');
   }
 }
