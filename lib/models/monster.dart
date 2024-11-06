@@ -36,10 +36,6 @@ class Monster {
       print('$monsterName이(가) ${character.heroName}에게 $demage의 데미지를 입혔습니다.');
       character.showStatus();
       showStatus();
-      if (character.heroHp < 0) {
-        print('-----------------------------------------------');
-        print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
-      }
     }
   }
 
