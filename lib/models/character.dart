@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:rpg_game/models/monster.dart';
 
 class Character {
@@ -12,6 +15,9 @@ class Character {
 
   // 캐릭터의 방어력
   int heroDefense;
+
+  // 아이템 사용 여부 확인
+  static bool useItem = false;
 
   Character(this.heroName, this.heroHp, this.heroAttack, this.heroDefense);
 
@@ -48,5 +54,10 @@ class Character {
   //캐릭터의 현재 체력, 공격력, 방어력을 매 턴마다 출력합니다.
   void showStatus() {
     print('$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense');
+  }
+
+  // 아이템 사용을 처리하는 함수
+  bool useItemCheck() {
+    return useItem;
   }
 }

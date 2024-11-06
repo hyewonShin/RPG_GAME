@@ -16,7 +16,10 @@ class Game {
   int killedMonterCount = 5;
   int killedMonter = 0;
 
+  // bonusHp() 의 결과값인 캐릭터의 체력
   int bonusHeroHp = 0;
+
+  int useheroAttack = 0;
 
   Future<void> loadCharacterStats(String heroName) async {
     try {
@@ -91,6 +94,7 @@ class Game {
 
         if (action == "1") {
           bool win = character!.attackMonster(randomMonster);
+          specialItem(character!.heroAttack);
           if (win) {
             // 몬스터를 물리침
             monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
@@ -127,6 +131,7 @@ class Game {
         } else if (action == "2") {
           character!.defend(randomMonster);
           randomMonster.attackCharacter(character!);
+          specialItem(character!.heroAttack);
         } else {
           print('1,2 중 하나를 입력해주세요 !');
         }
@@ -173,6 +178,28 @@ class Game {
     } else {
       print('아쉽게도 보너스 체력을 얻지 못했습니다.');
       return heroHp;
+    }
+  }
+
+  // 전투 시 캐릭터의 아이템 사용 기능
+  //아이템 사용 시 캐릭터는 한 턴 동안 공격력이 두 배로 변경
+  void specialItem(heroAttack) {
+    stdout.write('특수 아이템을 사용하려면 3번을 입력하세요: ');
+    String? result = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+
+    bool useItem = character!.useItemCheck();
+
+    if (useItem) return print('이미 사용한 아이템입니다');
+
+    if (result == '3') {
+      //한 턴 동안 공격력이 두 배로 변경
+      useheroAttack = heroAttack * 2;
+      character!.heroAttack = useheroAttack;
+      Character.useItem = true;
+      print('특수 아이템을 사용합니다 ! 현재 공격력: $useheroAttack');
+    } else {
+      print('잘못된 번호입니다');
+      return;
     }
   }
 }
