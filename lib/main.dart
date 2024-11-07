@@ -24,7 +24,7 @@ Future<void> main() async {
       return;
     }
 
-    // 캐릭터 이름 입력받은 이후 게임 시작
+    // 캐릭터 이름 입력받은 이후 게임 시작`
     game.startGame(heroName);
   } catch (e) {
     print('main() 에러 발생 > $e');

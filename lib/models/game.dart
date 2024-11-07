@@ -139,7 +139,7 @@ class Game {
               // 캐릭터가 몬스터를 공격하고 이겼는지 여부를 return 값으로 반환
               bool? win = character!.attackMonster(randomMonster);
 
-              if (win != null) {
+              if (win == true && win != null) {
                 // 몬스터를 물리쳤을 경우
                 monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
                 killedMonter += 1; // 물리친 몬스터의 개수 카운트
