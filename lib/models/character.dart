@@ -26,7 +26,10 @@ class Character {
   //몬스터에게 공격을 가하여 피해를 입힙니다.
   bool attackMonster(Monster monster) {
     monster.monsterHp -= heroAttack;
-    print('$heroName이(가) ${monster.monsterName}에게 $heroAttack의 데미지를 입혔습니다.');
+
+    int demage = heroAttack - monster.monsterDefense;
+
+    print('$heroName이(가) ${monster.monsterName}에게 $demage 데미지를 입혔습니다.');
     showStatus();
 
     if (monster.monsterHp <= 0) {
