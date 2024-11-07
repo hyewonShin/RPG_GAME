@@ -47,7 +47,7 @@ class Monster {
       // 3턴마다 몬스터의 방어력이 2가 증가하면 카운터 변수를 0으로 초기화
       gameTurnCount == 0;
 
-      print('$monsterName의 방어력이 증가했습니다! 현재 방어력: $monsterDefense');
+      print('⚠️  $monsterName의 방어력이 증가했습니다! 현재 방어력: $monsterDefense \n');
     }
   }
 

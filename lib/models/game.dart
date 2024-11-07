@@ -111,7 +111,7 @@ class Game {
                   stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
               if (nextGame == 'y' || nextGame == 'Y') {
-                print('\n계속해서 게임을 진행합니다.');
+                print('\n계속해서 게임을 진행합니다. \n');
               } else if (nextGame == 'n' || nextGame == 'N') {
                 print('n을 입력하셨습니다. 게임을 종료합니다!');
                 return;
@@ -195,7 +195,7 @@ class Game {
       Character.useItem = true;
       int useheroAttack = heroAttack * 2;
       character!.heroAttack = useheroAttack;
-      print('특수 아이템을 사용합니다 ! 현재 공격력: $useheroAttack \n');
+      print('🚀 특수 아이템을 사용합니다(공격력X2) ! 현재 공격력: $useheroAttack \n');
     } else {
       print('잘못된 번호입니다 \n');
       return;
