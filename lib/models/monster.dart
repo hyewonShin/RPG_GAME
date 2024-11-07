@@ -26,7 +26,6 @@ class Monster {
   //캐릭터에게 공격을 가하여 피해를 입힙니다.
   //캐릭터에게 입히는 데미지는 몬스터의 공격력에서 캐릭터의 방어력을 뺀 값이며, 최소 데미지는 0 이상입니다.
   void attackCharacter(Character character) {
-    print('-----------------------------------------------');
     print('🔨 $monsterName의 턴');
     int gameTurnCount = ++Game.turnCount;
 
@@ -35,7 +34,8 @@ class Monster {
     if (demage > 0) {
       character.heroHp -= demage;
       print('$monsterName이(가) ${character.heroName}에게 $demage의 데미지를 입혔습니다.');
-      character.showStatus();
+      print(
+          '${character.heroName} - 체력:${character.heroHp} 공격력:${character.heroAttack} 방어력:${character.heroDefense}');
       showStatus();
     }
 
@@ -55,6 +55,6 @@ class Monster {
   //몬스터의 현재 체력과 공격력을 매 턴마다 출력합니다.
   void showStatus() {
     print(
-        '$monsterName - 체력:$monsterHp 공격력:$monsterAttack 방어력: $monsterDefense');
+        '$monsterName - 체력:$monsterHp 공격력:$monsterAttack 방어력:$monsterDefense \n');
   }
 }

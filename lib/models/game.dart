@@ -68,10 +68,10 @@ class Game {
 
   //게임을 시작하는 메서드
   void startGame(heroName) async {
-    print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐');
+    print('⭐⭐⭐ 멋진 영웅 $heroName의 게임을 시작합니다 !⭐⭐⭐ \n');
+    await loadCharacterStats(heroName);
+    await loadMonsterStats();
     character!.showStatus();
-    // bonusHp(character!.heroHp);
-    print('-----------------------------------------------');
 
     await battle();
   }
@@ -82,11 +82,10 @@ class Game {
       Monster randomMonster = await getRandomMonster();
       print('👀 두둥-! 새로운 몬스터가 나타났습니다 !');
       print(
-          '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}');
+          '${randomMonster.monsterName} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack} \n');
 
       //  캐릭터와 몬스터가 둘 다 살아있는 동안 전투를 지속.
       while (character!.heroHp > 0 && randomMonster.monsterHp > 0) {
-        print('-----------------------------------------------');
         print('🧐 ${character!.heroName} 의 턴');
         stdout.write("행동을 선택하세요(1: 공격, 2: 방어): ");
         String? action =
@@ -112,8 +111,7 @@ class Game {
                   stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
               if (nextGame == 'y' || nextGame == 'Y') {
-                print('-----------------------------------------------');
-                print('계속해서 게임을 진행합니다.');
+                print('\n계속해서 게임을 진행합니다.');
               } else if (nextGame == 'n' || nextGame == 'N') {
                 print('n을 입력하셨습니다. 게임을 종료합니다!');
                 return;
@@ -123,7 +121,6 @@ class Game {
             randomMonster.attackCharacter(character!);
 
             if (character!.heroHp <= 0) {
-              print('-----------------------------------------------');
               print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
               fileWrite(character!.heroName, character!.heroHp, false);
               return;
@@ -135,7 +132,7 @@ class Game {
           bool useItem = character!.useItemCheck();
           if (!useItem) specialItem(character!.heroAttack);
         } else {
-          print('1,2 중 하나를 입력해주세요 !');
+          print('1,2 중 하나를 입력해주세요 ! \n');
         }
       }
     }
@@ -175,7 +172,7 @@ class Game {
 
     if (result) {
       bonusHeroHp = heroHp + 10;
-      print('🚀 보너스 체력을 얻었습니다! 현재 체력: $bonusHeroHp');
+      print('🚀 보너스 체력(+10)을 얻었습니다! 현재 체력: $bonusHeroHp');
       return bonusHeroHp;
     } else {
       print('아쉽게도 보너스 체력을 얻지 못했습니다.');
@@ -195,12 +192,12 @@ class Game {
 
     if (result == '3') {
       //한 턴 동안 공격력이 두 배로 변경
+      Character.useItem = true;
       int useheroAttack = heroAttack * 2;
       character!.heroAttack = useheroAttack;
-      Character.useItem = true;
-      print('특수 아이템을 사용합니다 ! 현재 공격력: $useheroAttack');
+      print('특수 아이템을 사용합니다 ! 현재 공격력: $useheroAttack \n');
     } else {
-      print('잘못된 번호입니다');
+      print('잘못된 번호입니다 \n');
       return;
     }
   }

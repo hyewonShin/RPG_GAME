@@ -33,7 +33,6 @@ class Character {
     showStatus();
 
     if (monster.monsterHp <= 0) {
-      print('-----------------------------------------------');
       print('🥳 ${monster.monsterName}을 물리쳤습니다 !');
       return true;
     }
@@ -53,7 +52,7 @@ class Character {
   // 상태를 출력하는 메서드
   //캐릭터의 현재 체력, 공격력, 방어력을 매 턴마다 출력합니다.
   void showStatus() {
-    print('$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense');
+    print('$heroName - 체력:$heroHp 공격력:$heroAttack 방어력:$heroDefense \n');
   }
 
   // 아이템 사용을 처리하는 함수
