@@ -1,3 +1,4 @@
+import 'package:rpg_game/models/game.dart';
 import 'package:rpg_game/models/monster.dart';
 
 class Character {
@@ -47,7 +48,7 @@ class Character {
   // 방어 메서드
   //방어 시 특정 행동을 수행합니다.
   //예) 대결 상대인 몬스터가 입힌 데미지만큼 캐릭터의 체력을 상승시킵니다.
-  void defend(Monster monster) {
+  Future defend(Monster monster) async {
     print('💊 $heroName이(가) 방어 태세를 취하여 ${monster.monsterAttack} 만큼 체력을 얻었습니다');
     heroHp += monster.monsterAttack;
     showStatus();
@@ -60,7 +61,9 @@ class Character {
   }
 
   // 아이템 사용을 처리하는 함수
-  bool useItemCheck() {
-    return useItem;
+  void useItemCheck(heroAttack) {
+    if (!useItem) {
+      Game.specialItem(heroAttack);
+    }
   }
 }
