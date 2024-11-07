@@ -204,7 +204,7 @@ class Game {
 
   // 전투 시 캐릭터의 아이템 사용 기능
   //아이템 사용 시 캐릭터는 한 턴 동안 공격력이 두 배로 변경
-  void specialItem(heroAttack) {
+  static void specialItem(heroAttack) {
     stdout.write('특수 아이템을 사용하려면 3번을 입력하세요: ');
     String? result = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
