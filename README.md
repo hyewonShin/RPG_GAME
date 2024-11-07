@@ -52,13 +52,14 @@ dart run lib/main.dart
 - 명예의 전당 기능
   - result.txt 파일에 승패 결과가 누적 되도록 함
   - 승리한 캐릭터 중에서 체력이 가장 높은 명예 영웅 선발
-  - 게임 실행 시 가장 위에 해당 영웅 출력 되도록 함 
+  - 게임 실행 시 가장 위에 해당 영웅 출력 되도록 함
+- chalkdart 라이브러리 사용하여 특정 텍스트에 색상 추가하여 가독성 높임
 <br/><br/>
 
 
 # 프로젝트 미리보기 
 ![image](https://github.com/user-attachments/assets/e0a73397-cb86-49b9-9022-fd9ca8b094db)
-<br/><br/>
+-
 ![image](https://github.com/user-attachments/assets/539ae3db-23f3-4f37-bdb7-8bfe39103047)
 
 
