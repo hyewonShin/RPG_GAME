@@ -205,7 +205,7 @@ class Game {
     }
   }
 
-  //캐릭터의 체력 증가 기능
+  // [도전] 캐릭터의 체력 증가 기능
   //30%의 확률로 캐릭터에게 보너스 체력을 제공
   int bonusHp(int heroHp) {
     Random random = Random();
@@ -221,7 +221,7 @@ class Game {
     }
   }
 
-  // 전투 시 캐릭터의 아이템 사용 기능
+  // [도전] 전투 시 캐릭터의 아이템 사용 기능
   //아이템 사용 시 캐릭터는 한 턴 동안 공격력이 두 배로 변경
   static void specialItem(heroAttack) {
     stdout.write('특수 아이템을 사용하려면 3번을 입력하세요: ');

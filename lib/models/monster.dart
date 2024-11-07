@@ -26,11 +26,14 @@ class Monster {
   // 공격 메서드
   //캐릭터에게 공격을 가하여 피해를 입힙니다.
   //캐릭터에게 입히는 데미지는 몬스터의 공격력에서 캐릭터의 방어력을 뺀 값이며, 최소 데미지는 0 이상입니다.
-  void attackCharacter(Character character) {
+  Future attackCharacter(Character character) async {
     print('🔨 ${chalk.red({monsterName})} 의 턴');
 
+    // 게임의 턴을 카운트하는 변수
     int gameTurnCount = ++Game.turnCount;
 
+    // 몬스터가 캐릭터를 공격할 수 있는 데미지
+    // 데미지 = 몬스터의 공격력 - 캐릭터의 방어력
     int demage = monsterAttack - character.heroDefense;
 
     if (demage > 0) {
@@ -41,9 +44,10 @@ class Monster {
       showStatus();
     } else {
       print('몬스터의 공격력이 0 이하이기 때문에 공격할 수 없습니다 ! \n');
+      return; // 이런 경우에 어떻게 처리할지 생각 ~ !
     }
 
-    //몬스터의 방어력 증가 기능 추가
+    //[도전]몬스터의 방어력 증가 기능 추가
     if (gameTurnCount % 3 == 0) {
       //3턴마다 방어력이 2씩 증가
       monsterDefense += 2;
