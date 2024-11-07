@@ -47,7 +47,7 @@ class Monster {
       return; // 이런 경우에 어떻게 처리할지 생각 ~ !
     }
 
-    //[도전]몬스터의 방어력 증가 기능 추가
+    // [도전] 몬스터의 방어력 증가 기능 추가
     if (gameTurnCount % 3 == 0) {
       //3턴마다 방어력이 2씩 증가
       monsterDefense += 2;

@@ -20,6 +20,7 @@ class Game {
   // bonusHp() 의 결과값인 캐릭터의 체력
   int bonusHeroHp = 0;
 
+  // 게임의 턴을 카운트하는 변수
   static int turnCount = 0;
 
   Future<void> loadCharacterStats(String heroName) async {
@@ -94,6 +95,14 @@ class Game {
 
     // 게임에 필요한 정보를 모두 불러온 이후, 전투를 진행하는 메서드 실행
     await battle();
+
+    // 캐릭터의 체력이 0 이하가 되면 게임이 종료
+    if (character!.heroHp <= 0) {
+      print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
+      // 결과를 저장하는 메서드 => y 입력 할 경우 result.txt 파일에 저장
+      saveFile(character!.heroName, character!.heroHp, false);
+      return;
+    }
   }
 
   //전투를 진행하는 메서드
@@ -150,14 +159,6 @@ class Game {
           } else {
             // 몬스터를 물리치지 못한 경우 : 몬스터가 캐릭터를 공격 !
             randomMonster.attackCharacter(character!);
-
-            // 캐릭터의 체력이 0 이하가 되면 게임이 종료
-            if (character!.heroHp <= 0) {
-              print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
-              // 결과를 저장하는 메서드 => y 입력 할 경우 result.txt 파일에 저장
-              saveFile(character!.heroName, character!.heroHp, false);
-              return;
-            }
           }
         } else if (action == "2") {
           // 캐릭터의 방어 액션
@@ -239,7 +240,7 @@ class Game {
     }
   }
 
-  // 추가기능 : 명예의 전당
+  // [도전] 추가기능 : 명예의 전당
   //게임에서 승리한 캐릭터 중 방어력이 가장 높은 캐릭터 한 명 선정
   Future hallOfFame() async {
     final file = File(env('SAVE_PATH'));
