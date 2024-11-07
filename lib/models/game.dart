@@ -45,6 +45,7 @@ class Game {
   //몬스터 정보를 불러오는 메서드
   Future<void> loadMonsterStats() async {
     try {
+      // monster.txt 파일로부터 몬스터 데이터 불러오기
       final file = File(env('MONSTERS_PATH'));
       final contents = await file.readAsString();
       final stats = contents.split('\n');
@@ -52,13 +53,22 @@ class Game {
       for (var item in stats) {
         final monster = item.split(',');
 
+        // 몬스터의 이름
         String monsterName = monster[0];
+
+        // 몬스터의 체력
         int monsterHp = int.parse(monster[1]);
+
+        // 몬스터의 공격범위
         int monsterAttackRange = int.parse(monster[2]);
+
+        // 랜덤으로 지정할 공격력 범위 최대값 (int)
+        //몬스터의 공격력은 캐릭터의 방어력보다 작을 수 없습니다. 랜덤으로 지정하여 캐릭터의 방어력과 랜덤 값 중 최대값으로 설정해주세요.
         int monsterAttack =
             Random().nextInt(monsterAttackRange - character!.heroDefense + 1) +
                 character!.heroDefense;
 
+        // Monster 인스턴스 생성하여 List<Monster> 에 차곡차곡 담아주기
         monsters.add(Monster(monsterName, monsterHp, monsterAttack));
       }
     } catch (e) {
