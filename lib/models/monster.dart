@@ -27,35 +27,39 @@ class Monster {
   //캐릭터에게 공격을 가하여 피해를 입힙니다.
   //캐릭터에게 입히는 데미지는 몬스터의 공격력에서 캐릭터의 방어력을 뺀 값이며, 최소 데미지는 0 이상입니다.
   Future attackCharacter(Character character) async {
-    print('🔨 ${chalk.red({monsterName})} 의 턴');
+    try {
+      print('🔨 ${chalk.red({monsterName})} 의 턴');
 
-    // 게임의 턴을 카운트하는 변수
-    int gameTurnCount = ++Game.turnCount;
+      // 게임의 턴을 카운트하는 변수
+      int gameTurnCount = ++Game.turnCount;
 
-    // 몬스터가 캐릭터를 공격할 수 있는 데미지
-    // 데미지 = 몬스터의 공격력 - 캐릭터의 방어력
-    int demage = monsterAttack - character.heroDefense;
+      // 몬스터가 캐릭터를 공격할 수 있는 데미지
+      // 데미지 = 몬스터의 공격력 - 캐릭터의 방어력
+      int demage = monsterAttack - character.heroDefense;
 
-    if (demage > 0) {
-      character.heroHp -= demage;
-      print('$monsterName이(가) ${character.heroName}에게 $demage의 데미지를 입혔습니다.');
-      print(
-          '${character.heroName} - 체력:${character.heroHp} 공격력:${character.heroAttack} 방어력:${character.heroDefense}');
-      showStatus();
-    } else {
-      print('몬스터의 공격력이 0 이하이기 때문에 공격할 수 없습니다 ! \n');
-      return; // 이런 경우에 어떻게 처리할지 생각 ~ !
-    }
+      if (demage > 0) {
+        character.heroHp -= demage;
+        print('$monsterName이(가) ${character.heroName}에게 $demage의 데미지를 입혔습니다.');
+        print(
+            '${character.heroName} - 체력:${character.heroHp} 공격력:${character.heroAttack} 방어력:${character.heroDefense}');
+        showStatus();
+      } else {
+        print('몬스터의 공격력이 0 이하이기 때문에 공격할 수 없습니다 ! \n');
+        return; // 이런 경우에 어떻게 처리할지 생각 ~ !
+      }
 
-    // [도전] 몬스터의 방어력 증가 기능 추가
-    if (gameTurnCount % 3 == 0) {
-      //3턴마다 방어력이 2씩 증가
-      monsterDefense += 2;
+      // [도전] 몬스터의 방어력 증가 기능 추가
+      if (gameTurnCount % 3 == 0) {
+        //3턴마다 방어력이 2씩 증가
+        monsterDefense += 2;
 
-      // 3턴마다 몬스터의 방어력이 2가 증가하면 카운터 변수를 0으로 초기화
-      gameTurnCount == 0;
+        // 3턴마다 몬스터의 방어력이 2가 증가하면 카운터 변수를 0으로 초기화
+        gameTurnCount == 0;
 
-      print('⚠️  $monsterName의 방어력이 증가했습니다! 현재 방어력: $monsterDefense \n');
+        print('⚠️  $monsterName의 방어력이 증가했습니다! 현재 방어력: $monsterDefense \n');
+      }
+    } catch (e) {
+      print('attackCharacter() 에러 발생 > $e');
     }
   }
 
