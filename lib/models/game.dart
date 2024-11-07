@@ -24,18 +24,27 @@ class Game {
 
   Future<void> loadCharacterStats(String heroName) async {
     try {
+      // charactor.txt 파일로부터 캐릭터 데이터 불러오기
       final file = File(env('CHARACTERS_PATH'));
       final contents = await file.readAsString();
       final stats = contents.split(',');
 
+      // 캐릭터의 데이터가 3개가 아닌 경우 오류내기
       if (stats.length != 3) throw FormatException('Invalid character data');
 
+      // 캐릭터의 체력
       int heroHp = int.parse(stats[0]);
+
+      // 캐릭터의 공격력
       int heroAttack = int.parse(stats[1]);
+
+      // 캐릭터의 방어력
       int heroDefense = int.parse(stats[2]);
 
+      // 캐릭터의 체력 증가 기능 실행 후 bonusHeroHp반환하여 인스턴스에 넣어주기
       bonusHeroHp = bonusHp(heroHp);
 
+      // 캐릭터 인스턴스 생성
       character = Character(heroName, bonusHeroHp, heroAttack, heroDefense);
     } catch (e) {
       print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');
