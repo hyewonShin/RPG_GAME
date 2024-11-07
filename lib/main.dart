@@ -4,6 +4,7 @@ import 'package:rpg_game/models/game.dart';
 
 Future<void> main() async {
   Game game = Game();
+  await game.hallOfFame();
 
   stdout.write("캐릭터의 이름을 입력하세요: ");
 
