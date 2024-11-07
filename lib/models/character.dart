@@ -73,14 +73,7 @@ class Character {
   }
 
   // 아이템 사용을 처리하는 함수
-  // useItem이 false인 경우 Game 클래스의 specialItem() 실행
-  void useItemCheck(heroAttack) {
-    try {
-      if (!useItem) {
-        Game.specialItem(heroAttack);
-      }
-    } catch (e) {
-      print('useItemCheck() 에러 발생 > $e');
-    }
+  bool useItemCheck() {
+    return useItem;
   }
 }

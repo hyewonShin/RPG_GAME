@@ -23,6 +23,8 @@ class Game {
   // 게임의 턴을 카운트하는 변수
   static int turnCount = 0;
 
+  int useheroAttack = 0;
+
   Future<void> loadCharacterStats(String heroName) async {
     try {
       // charactor.txt 파일로부터 캐릭터 데이터 불러오기
@@ -132,8 +134,8 @@ class Game {
             String? action =
                 stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
-            // 특수 아이템 사용 여부 체크한 이후, 사용자 응답에 따라 specialItem() 실행
-            character!.useItemCheck(character!.heroAttack);
+            // [도전] 전투 시 캐릭터의 아이템 사용 기능 추가
+            specialItem(character!.heroAttack);
 
             if (action == "1") {
               // 캐릭터가 몬스터를 공격하고 이겼는지 여부를 return 값으로 반환
@@ -174,9 +176,6 @@ class Game {
 
               // 몬스터가 캐릭터를 공격
               await randomMonster.attackCharacter(character!);
-
-              // 특수 아이템 사용 여부 체크한 이후, 사용자 응답에 따라 specialItem() 실행
-              character!.useItemCheck(character!.heroAttack);
             } else {
               print('1,2 중 하나를 입력해주세요 ! \n');
             }
@@ -252,21 +251,24 @@ class Game {
 
   // [도전] 전투 시 캐릭터의 아이템 사용 기능
   //아이템 사용 시 캐릭터는 한 턴 동안 공격력이 두 배로 변경
-  static void specialItem(heroAttack) {
+  void specialItem(heroAttack) {
     try {
-      stdout.write('특수 아이템을 사용하려면 3번을 입력하세요: ');
-      String? result =
-          stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+      bool useItem = character!.useItemCheck();
+      if (!useItem) {
+        stdout.write('특수 아이템을 사용하려면 3번을 입력하세요: ');
+        String? result =
+            stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
-      if (result == '3') {
-        //한 턴 동안 공격력이 두 배로 변경
-        Character.useItem = true;
-        int useheroAttack = heroAttack * 2;
-        heroAttack = useheroAttack;
-        print('🚀 특수 아이템을 사용합니다(공격력X2) ! 현재 공격력: $useheroAttack \n');
-      } else {
-        print('잘못된 번호입니다 \n');
-        return;
+        if (result == '3') {
+          //한 턴 동안 공격력이 두 배로 변경
+          useheroAttack = heroAttack * 2;
+          character!.heroAttack = useheroAttack;
+          Character.useItem = true;
+          print('특수 아이템을 사용합니다 ! 현재 공격력: $useheroAttack');
+        } else {
+          print('잘못된 번호입니다');
+          return;
+        }
       }
     } catch (e) {
       print('specialItem() 에러 발생 > $e');
