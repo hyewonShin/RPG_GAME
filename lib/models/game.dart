@@ -69,44 +69,54 @@ class Game {
   //게임을 시작하는 메서드
   void startGame(heroName) async {
     print('⭐⭐⭐ 멋진 영웅 ${chalk.blueBright(heroName)}의 게임을 시작합니다! ⭐⭐⭐ \n');
-    await loadCharacterStats(heroName);
-    await loadMonsterStats();
-    character!.showStatus();
+    await loadCharacterStats(heroName); // cvs파일에서 캐릭터 정보 불러옴
+    await loadMonsterStats(); // cvs파일에서 몬스터 정보 불러옴
+    character!.showStatus(); //캐릭터의 기본정보 출력
 
+    // 게임에 필요한 정보를 모두 불러온 이후, 전투를 진행하는 메서드 실행
     await battle();
   }
 
   //전투를 진행하는 메서드
   Future battle() async {
+    // 외부 while문 : 캐릭터가 살아있고, 상대할 몬스터가 존재할동안 전투를 지속
     while (character!.heroHp >= 0 && monsters.isNotEmpty) {
+      // 몬스터 리스트에 있는 몬스터들 중 랜덤으로 뽑아서 대결 시작
       Monster randomMonster = await getRandomMonster();
+
       print('👀 두둥-! 새로운 몬스터가 나타났습니다 !');
       print('${chalk.redBright({
             randomMonster.monsterName
           })} - 체력: ${randomMonster.monsterHp}, 공격력: ${randomMonster.monsterAttack}, 방어력 ${randomMonster.monsterDefense} \n');
 
-      //  캐릭터와 몬스터가 둘 다 살아있는 동안 전투를 지속.
+      // 내부 while문 : 캐릭터와 몬스터가 둘 다 살아있는 동안 전투를 지속.
       while (character!.heroHp > 0 && randomMonster.monsterHp > 0) {
         print('🧐 ${chalk.blueBright({character!.heroName})} 의 턴');
+
         stdout.write("행동을 선택하세요(1: 공격, 2: 방어): ");
         String? action =
             stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
-        if (action == "1") {
-          bool win = character!.attackMonster(randomMonster);
-          bool useItem = character!.useItemCheck();
-          if (!useItem) specialItem(character!.heroAttack);
-          if (win) {
-            // 몬스터를 물리침
-            monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
-            killedMonter += 1;
+        // 특수 아이템 사용 여부 체크한 이후, 사용자 응답에 따라 specialItem() 실행
+        character!.useItemCheck(character!.heroAttack);
 
-            if (killedMonter >= 3) {
-              // 설정한 물리친 몬스터 개수만큼 몬스터를 물리치면 게임에서 승리
+        if (action == "1") {
+          // 캐릭터가 몬스터를 공격하고 이겼는지 여부를 return 값으로 반환
+          bool win = character!.attackMonster(randomMonster);
+
+          if (win) {
+            // 몬스터를 물리쳤을 경우
+            monsters.remove(randomMonster); // 물리친 몬스터 리스트에서 제거
+            killedMonter += 1; // 물리친 몬스터의 개수 카운트
+
+            if (killedMonter >= 5) {
+              // 설정한 물리친 몬스터 개수만큼 몬스터를 물리치면 게임에서 승리 !
               print('🏅 ${character!.heroName} 용사님 축하합니다! 모든 몬스터를 물리쳤습니다 🥳');
-              fileWrite(character!.heroName, character!.heroHp, true);
+              // 결과를 저장하는 메서드 => y 입력 할 경우 result.txt 파일에 저장
+              saveFile(character!.heroName, character!.heroHp, true);
               return;
             } else {
+              // 몬스터를 물리칠 때마다 다음 몬스터와 대결할 건지 선택
               stdout.write('다음 몬스터와 싸우시겠습니까? (y/n): ');
               String? nextGame =
                   stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
@@ -119,19 +129,26 @@ class Game {
               }
             }
           } else {
+            // 몬스터를 물리치지 못한 경우 : 몬스터가 캐릭터를 공격 !
             randomMonster.attackCharacter(character!);
 
+            // 캐릭터의 체력이 0 이하가 되면 게임이 종료
             if (character!.heroHp <= 0) {
               print('😵 캐릭터의 hp가 다하여 게임이 종료되었습니다.');
-              fileWrite(character!.heroName, character!.heroHp, false);
+              // 결과를 저장하는 메서드 => y 입력 할 경우 result.txt 파일에 저장
+              saveFile(character!.heroName, character!.heroHp, false);
               return;
             }
           }
         } else if (action == "2") {
-          character!.defend(randomMonster);
-          randomMonster.attackCharacter(character!);
-          bool useItem = character!.useItemCheck();
-          if (!useItem) specialItem(character!.heroAttack);
+          // 캐릭터의 방어 액션
+          await character!.defend(randomMonster);
+
+          // 몬스터가 캐릭터를 공격
+          await randomMonster.attackCharacter(character!);
+
+          // 특수 아이템 사용 여부 체크한 이후, 사용자 응답에 따라 specialItem() 실행
+          character!.useItemCheck(character!.heroAttack);
         } else {
           print('1,2 중 하나를 입력해주세요 ! \n');
         }
@@ -139,7 +156,7 @@ class Game {
     }
   }
 
-//랜덤으로 몬스터를 불러오는 메서드
+  // 몬스터를 랜덤으로 반환하는 메서드
   Future<Monster> getRandomMonster() async {
     if (monsters.isEmpty) {
       print('몬스터 리스트가 비어있습니다 !');
@@ -149,7 +166,7 @@ class Game {
   }
 
 // 캐릭터의 이름, 남은 체력, 게임 결과(승리/패배) 저장하는 메서드
-  void fileWrite(String heroName, int heroHp, bool win) {
+  void saveFile(String heroName, int heroHp, bool win) {
     final file = File(env('SAVE_PATH'));
 
     stdout.write('결과를 저장하시겠습니까? (y/n) ');
@@ -161,7 +178,7 @@ class Game {
       //     'heroName: $heroName / heroHp: $heroHp / win: $win ',
       //     mode: FileMode.append);
 
-      // 2) 추가 기능(명예의 전당) 을 위한 저장 형식 변경
+      // 2) 추가 기능(명예의 전당) 을 위한 저장 형식 변경(value만 누적)
       file.writeAsStringSync('$heroName/$heroHp/$win|', mode: FileMode.append);
     } else if (result == 'n' || result == 'N') {
       print('게임 결과를 저장하지 않고 종료합니다.');
@@ -169,8 +186,8 @@ class Game {
     }
   }
 
-//캐릭터의 체력 증가 기능
-//30%의 확률로 캐릭터에게 보너스 체력을 제공
+  //캐릭터의 체력 증가 기능
+  //30%의 확률로 캐릭터에게 보너스 체력을 제공
   int bonusHp(int heroHp) {
     Random random = Random();
     bool result = random.nextDouble() <= 0.3;
@@ -191,15 +208,11 @@ class Game {
     stdout.write('특수 아이템을 사용하려면 3번을 입력하세요: ');
     String? result = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
-    bool useItem = character!.useItemCheck();
-
-    if (useItem) return print('이미 사용한 아이템입니다');
-
     if (result == '3') {
       //한 턴 동안 공격력이 두 배로 변경
       Character.useItem = true;
       int useheroAttack = heroAttack * 2;
-      character!.heroAttack = useheroAttack;
+      heroAttack = useheroAttack;
       print('🚀 특수 아이템을 사용합니다(공격력X2) ! 현재 공격력: $useheroAttack \n');
     } else {
       print('잘못된 번호입니다 \n');
@@ -208,7 +221,7 @@ class Game {
   }
 
   // 추가기능 : 명예의 전당
-  //게임에서 승리한 캐릭터 중 방어력이 가장 높은 캐릭터 선정
+  //게임에서 승리한 캐릭터 중 방어력이 가장 높은 캐릭터 한 명 선정
   Future hallOfFame() async {
     final file = File(env('SAVE_PATH'));
     final contents = await file.readAsString();
