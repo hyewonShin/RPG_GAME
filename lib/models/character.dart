@@ -32,6 +32,8 @@ class Character {
     if (demage > 0) {
       print('🗡️  $heroName이(가) ${monster.monsterName}에게 $demage 데미지를 입혔습니다.');
       showStatus();
+    } else {
+      print('캐릭터의 공격력이 0 이하이기 때문에 공격할 수 없습니다 ! \n');
     }
 
     if (monster.monsterHp <= 0) {

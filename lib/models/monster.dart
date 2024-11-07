@@ -37,6 +37,8 @@ class Monster {
       print(
           '${character.heroName} - 체력:${character.heroHp} 공격력:${character.heroAttack} 방어력:${character.heroDefense}');
       showStatus();
+    } else {
+      print('몬스터의 공격력이 0 이하이기 때문에 공격할 수 없습니다 ! \n');
     }
 
     //몬스터의 방어력 증가 기능 추가
